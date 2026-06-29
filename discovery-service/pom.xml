@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -12,18 +14,22 @@
     <groupId>com.github.yildizmy</groupId>
     <artifactId>discovery-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
     <name>discovery-service</name>
     <description>Discovery Service</description>
 
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
+
     </dependencies>
 
     <profiles>
@@ -31,18 +37,22 @@
             <id>build-image</id>
             <build>
                 <plugins>
+
                     <plugin>
                         <groupId>com.google.cloud.tools</groupId>
                         <artifactId>jib-maven-plugin</artifactId>
                         <version>3.2.1</version>
+
                         <configuration>
                             <from>
                                 <image>eclipse-temurin:21-jdk</image>
                             </from>
+
                             <to>
                                 <image>yildizmy/${project.artifactId}:${project.version}</image>
                             </to>
                         </configuration>
+
                         <executions>
                             <execution>
                                 <goals>
@@ -51,7 +61,9 @@
                                 <phase>package</phase>
                             </execution>
                         </executions>
+
                     </plugin>
+
                 </plugins>
             </build>
         </profile>
