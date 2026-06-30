@@ -4,5 +4,3 @@ server:
 spring:
   application:
     name: discovery-service
-  config:
-    import: optional:configserver:http://config-service:8888
