@@ -51,7 +51,7 @@ public class GatewayApplication {
 
         @GetMapping("/")
         public String home() {
-            return "<h1>🚀 Hello Guys</h1>";
+            return "<h1>🚀 Hello Guy</h1>";
         }
     }
 }
