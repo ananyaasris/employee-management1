@@ -1,14 +1,33 @@
+version: '3.8'
+services:
   gateway:
     image: 598894509431.dkr.ecr.ap-southeast-2.amazonaws.com/gateway:latest
+    container_name: gateway
     ports:
       - "80:8080"
     environment:
-      - SPRING_CLOUD_GATEWAY_ROUTES[0].ID=employee-service
-      - SPRING_CLOUD_GATEWAY_ROUTES[0].URI=http://employee:8080
-      - SPRING_CLOUD_GATEWAY_ROUTES[0].PREDICATES[0]=Path=/api/employees/**
-      - SPRING_CLOUD_GATEWAY_ROUTES[1].ID=department-service
-      - SPRING_CLOUD_GATEWAY_ROUTES[1].URI=http://department:8080
-      - SPRING_CLOUD_GATEWAY_ROUTES[1].PREDICATES[0]=Path=/api/departments/**
+      SPRING_APPLICATION_NAME: gateway
+      SPRING_CLOUD_GATEWAY_ROUTES_0_ID: employee-service
+      SPRING_CLOUD_GATEWAY_ROUTES_0_URI: http://employee:8080
+      SPRING_CLOUD_GATEWAY_ROUTES_0_PREDICATES_0: Path=/api/employees/**
+      SPRING_CLOUD_GATEWAY_ROUTES_1_ID: department-service
+      SPRING_CLOUD_GATEWAY_ROUTES_1_URI: http://department:8080
+      SPRING_CLOUD_GATEWAY_ROUTES_1_PREDICATES_0: Path=/api/departments/**
     depends_on:
       - employee
       - department
+    restart: always
+
+  employee:
+    image: 598894509431.dkr.ecr.ap-southeast-2.amazonaws.com/employee:latest
+    container_name: employee
+    ports:
+      - "8081:8080"
+    restart: always
+
+  department:
+    image: 598894509431.dkr.ecr.ap-southeast-2.amazonaws.com/department:latest
+    container_name: department
+    ports:
+      - "8082:8080"
+    restart: always
