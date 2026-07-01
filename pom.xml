@@ -33,8 +33,6 @@
     </properties>
 
     <modules>
-        <module>config-service</module>
-        <module>discovery-service</module>
         <module>employee-service</module>
         <module>gateway-service</module>
     </modules>
