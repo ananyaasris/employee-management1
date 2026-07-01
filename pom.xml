@@ -20,6 +20,8 @@
         <maven.compiler.target>21</maven.compiler.target>
         <spring-boot.version>3.3.0</spring-boot.version>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <springdoc.version>2.5.0</springdoc.version>
+        <instancio.version>4.6.0</instancio.version>
     </properties>
 
     <dependencyManagement>
@@ -37,6 +39,16 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.instancio</groupId>
+                <artifactId>instancio-junit</artifactId>
+                <version>${instancio.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
