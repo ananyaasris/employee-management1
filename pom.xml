@@ -22,6 +22,9 @@
         <spring-cloud.version>2023.0.1</spring-cloud.version>
         <springdoc.version>2.5.0</springdoc.version>
         <instancio.version>4.6.0</instancio.version>
+        <micrometer-tracing.version>1.3.0</micrometer-tracing.version>
+        <opentelemetry.version>1.36.0</opentelemetry.version>
+        <feign-micrometer.version>13.3</feign-micrometer.version>
     </properties>
 
     <dependencyManagement>
@@ -49,6 +52,21 @@
                 <groupId>org.instancio</groupId>
                 <artifactId>instancio-junit</artifactId>
                 <version>${instancio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing-bridge-otel</artifactId>
+                <version>${micrometer-tracing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-exporter-zipkin</artifactId>
+                <version>${opentelemetry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-micrometer</artifactId>
+                <version>${feign-micrometer.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
