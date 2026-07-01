@@ -33,3 +33,16 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/${{ matrix.service }}:$IMAGE_TAG -f ${{ matrix.service }}/Dockerfile .
         docker push $ECR_REGISTRY/${{ matrix.service }}:$IMAGE_TAG
+
+              - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 533267094890.dkr.ecr.ap-south-1.amazonaws.com
+            docker pull 533267094890.dkr.ecr.ap-south-1.amazonaws.com/${{ matrix.service }}:latest
+            docker stop ${{ matrix.service }} || true
+            docker rm ${{ matrix.service }} || true
+            docker run -d -p 8080:8080 --restart always --name ${{ matrix.service }} 533267094890.dkr.ecr.ap-south-1.amazonaws.com/${{ matrix.service }}:latest
