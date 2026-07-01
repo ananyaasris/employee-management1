@@ -1,21 +1,14 @@
-version: '3.8'
-services:
   gateway:
-    build: ./gateway
-    container_name: gateway
+    image: 598894509431.dkr.ecr.ap-southeast-2.amazonaws.com/gateway:latest
     ports:
-      - "80:8080"   
+      - "80:8080"
+    environment:
+      - SPRING_CLOUD_GATEWAY_ROUTES[0].ID=employee-service
+      - SPRING_CLOUD_GATEWAY_ROUTES[0].URI=http://employee:8080
+      - SPRING_CLOUD_GATEWAY_ROUTES[0].PREDICATES[0]=Path=/api/employees/**
+      - SPRING_CLOUD_GATEWAY_ROUTES[1].ID=department-service
+      - SPRING_CLOUD_GATEWAY_ROUTES[1].URI=http://department:8080
+      - SPRING_CLOUD_GATEWAY_ROUTES[1].PREDICATES[0]=Path=/api/departments/**
     depends_on:
       - employee
-    networks:
-      - app-network
-
-  employee:
-    build: ./employee-service
-    container_name: employee
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+      - department
