@@ -1,47 +1,32 @@
 package com.github.yildizmy.controller;
 
 import com.github.yildizmy.model.Employee;
-import com.github.yildizmy.repository.EmployeeRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j(topic = "EmployeeController")
 @RestController
-@RequiredArgsConstructor
+@RequestMapping("/employees")
 public class EmployeeController {
 
-    private final EmployeeRepository repository;
-
-    @PostMapping("/")
-    public Employee add(@RequestBody Employee employee) {
-        log.info("Employee add: {}", employee);
-        return repository.add(employee);
+    // Indha rendu method ah add pannu 👇
+    @GetMapping
+    public List<Employee> getAllEmployees() {
+        List<Employee> list = new ArrayList<>();
+        list.add(new Employee(1L, "Sathish Kumar", "sathish@gmail.com", 1L));
+        list.add(new Employee(2L, "Priya Devi", "priya@gmail.com", 2L));
+        return list;
     }
 
-    @GetMapping("/")
-    public List<Employee> findAll() {
-        log.info("Employee findAll");
-        return repository.findAll();
+    @PostMapping
+    public Employee createEmployee(@RequestBody Employee employee) {
+        employee.setId(3L);
+        return employee;
     }
 
+    // Already irukura code - id by employee
     @GetMapping("/{id}")
-    public Employee findById(@PathVariable("id") Long id) {
-        log.info("Employee findById: id={}", id);
-        return repository.findById(id);
-    }
-
-    @GetMapping("/departments/{id}")
-    public List<Employee> findByDepartmentId(@PathVariable("id") Long id) {
-        log.info("Employee findByDepartmentId: departmentId={}", id);
-        return repository.findByDepartmentId(id);
-    }
-
-    @GetMapping("/organizations/{id}")
-    public List<Employee> findByOrganizationId(@PathVariable("id") Long id) {
-        log.info("Employee findByOrganizationId: organizationId={}", id);
-        return repository.findByOrganizationId(id);
+    public Employee getEmployee(@PathVariable Long id) {
+        return new Employee(id, "Test", "test@test.com", 1L);
     }
 }
