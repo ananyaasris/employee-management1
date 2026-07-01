@@ -4,7 +4,7 @@ services:
     build: ./gateway
     container_name: gateway
     ports:
-      - "80:8080"     # ← Idha maathu. Munnadi 8080:8080 irundhuchu
+      - "80:8080"   
     depends_on:
       - employee
     networks:
