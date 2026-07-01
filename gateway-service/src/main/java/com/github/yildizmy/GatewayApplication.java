@@ -69,7 +69,7 @@ public class GatewayApplication {
     class HomeController {
         @GetMapping("/")
         String home() {
-            return "<h1>🚀 Gateway is UP</h1>";
+            return "<h1>🚀 helooo guys </h1>";
         }
     }
 }
