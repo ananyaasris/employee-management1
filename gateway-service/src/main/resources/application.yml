@@ -1,18 +1,27 @@
 server:
+  server:
   port: 8080
+
 
 spring:
   cloud:
+    config:
+      enabled: false
+      import-check:
+        enabled: false
+
     gateway:
       routes:
         - id: employee-service
-          uri: http://employee:8081
+          uri: http://employee-service:8081
           predicates:
             - Path=/employee/**
           filters:
             - StripPrefix=1
+
   main:
     web-application-type: reactive
+
 
 management:
   endpoints:
