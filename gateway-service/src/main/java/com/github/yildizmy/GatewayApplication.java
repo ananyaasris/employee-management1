@@ -11,6 +11,8 @@ import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -61,5 +63,13 @@ public class GatewayApplication {
         });
         swaggerUiConfigParameters.setUrls(urls);
         return urls;
+    }
+
+    @RestController
+    class HomeController {
+        @GetMapping("/")
+        String home() {
+            return "<h1>🚀 Gateway is UP</h1>";
+        }
     }
 }
