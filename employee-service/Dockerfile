@@ -1,10 +1,9 @@
 FROM maven:3.8.5-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY pom.xml .
-COPY employee-service ./employee-service
-COPY gateway-service ./gateway-service
 COPY config-service ./config-service
 COPY discovery-service ./discovery-service
+COPY employee-service ./employee-service
 RUN mvn clean package -pl employee-service -am -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
