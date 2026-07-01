@@ -32,15 +32,13 @@ jobs:
     # Build Gateway
     - name: Build Gateway Docker Image
       run: |
-        cd gateway-service
-        docker build -t gateway-service:latest .
+        docker build -t gateway-service:latest -f gateway-service/Dockerfile .
 
 
     # Build Employee
     - name: Build Employee Docker Image
       run: |
-        cd employee-service
-        docker build -t employee-service:latest .
+        docker build -t employee-service:latest -f employee-service/Dockerfile .
 
 
     # Tag Images
