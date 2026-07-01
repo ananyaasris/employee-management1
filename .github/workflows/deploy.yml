@@ -14,8 +14,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v4
+
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -24,6 +26,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -31,30 +34,34 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Debug Gateway Build
+
+      - name: Build Gateway
         run: |
           mvn clean package -pl gateway-service -am -DskipTests
-          echo "===== gateway-service/target ====="
-          ls -lh gateway-service/target
 
-      - name: Build and Push Gateway Service
+
+      - name: Build and Push Gateway Image
         run: |
           docker build \
-            -t ${{ env.ECR_REGISTRY }}/gateway-service:latest \
-            -f gateway-service/Dockerfile .
+          -t ${{ env.ECR_REGISTRY }}/gateway-service:latest \
+          -f gateway-service/Dockerfile .
 
           docker push ${{ env.ECR_REGISTRY }}/gateway-service:latest
 
-      - name: Build and Push Employee Service
+
+      - name: Build and Push Employee Image
         run: |
           docker build \
-            -t ${{ env.ECR_REGISTRY }}/employee-service:latest \
-            -f employee-service/Dockerfile .
+          -t ${{ env.ECR_REGISTRY }}/employee-service:latest \
+          -f employee-service/Dockerfile .
 
           docker push ${{ env.ECR_REGISTRY }}/employee-service:latest
+
+
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
@@ -62,23 +69,41 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
+
           script: |
-            aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 597819998313.dkr.ecr.ap-southeast-2.amazonaws.com
+
+            aws ecr get-login-password --region ap-southeast-2 | \
+            docker login --username AWS --password-stdin \
+            597819998313.dkr.ecr.ap-southeast-2.amazonaws.com
+
 
             docker pull 597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/gateway-service:latest
+
             docker pull 597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/employee-service:latest
 
-            docker rm -f gateway-service || true
-            docker rm -f employee-service || true
 
-            docker run -d \
-              --name gateway-service \
-              --restart always \
-              -p 8080:8080 \
-              597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/gateway-service:latest
 
+            # remove old containers
+            docker stop gateway || true
+            docker rm gateway || true
+
+            docker stop employee || true
+            docker rm employee || true
+
+
+
+            # start new gateway
             docker run -d \
-              --name employee-service \
-              --restart always \
-              -p 8081:8081 \
-              597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/employee-service:latest
+            --name gateway \
+            --restart always \
+            -p 80:8080 \
+            597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/gateway-service:latest
+
+
+
+            # start new employee
+            docker run -d \
+            --name employee \
+            --restart always \
+            -p 8081:8080 \
+            597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/employee-service:latest
