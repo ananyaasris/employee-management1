@@ -8,5 +8,5 @@ RUN mvn clean package -pl employee-service -am -DskipTests
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=build /app/employee-service/target/*.jar app.jar
-EXPOSE 8081
+EXPOSE 8082
 ENTRYPOINT ["java","-jar","app.jar"]
