@@ -1,7 +1,5 @@
 server:
-  server:
   port: 8081
-
 
 spring:
   cloud:
@@ -13,7 +11,7 @@ spring:
     gateway:
       routes:
         - id: employee-service
-          uri: http://employee-service:8081
+          uri: http://employee-service:8082
           predicates:
             - Path=/employee/**
           filters:
@@ -22,6 +20,11 @@ spring:
   main:
     web-application-type: reactive
 
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
 
 management:
   endpoints:
