@@ -18,14 +18,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
-
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -34,34 +32,32 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
-
 
       - name: Build Gateway
         run: |
           mvn clean package -pl gateway-service -am -DskipTests
 
-
       - name: Build and Push Gateway Image
         run: |
           docker build \
-          -t ${{ env.ECR_REGISTRY }}/gateway-service:latest \
-          -f gateway-service/Dockerfile .
+            -t ${{ env.ECR_REGISTRY }}/gateway-service:latest \
+            -f gateway-service/Dockerfile .
 
           docker push ${{ env.ECR_REGISTRY }}/gateway-service:latest
 
+      - name: Build Employee
+        run: |
+          mvn clean package -pl employee-service -am -DskipTests
 
       - name: Build and Push Employee Image
         run: |
           docker build \
-          -t ${{ env.ECR_REGISTRY }}/employee-service:latest \
-          -f employee-service/Dockerfile .
+            -t ${{ env.ECR_REGISTRY }}/employee-service:latest \
+            -f employee-service/Dockerfile .
 
           docker push ${{ env.ECR_REGISTRY }}/employee-service:latest
-
-
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
@@ -76,34 +72,29 @@ jobs:
             docker login --username AWS --password-stdin \
             597819998313.dkr.ecr.ap-southeast-2.amazonaws.com
 
+            docker network create employee-network || true
 
             docker pull 597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/gateway-service:latest
-
             docker pull 597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/employee-service:latest
 
-
-
-            # remove old containers
             docker stop gateway || true
             docker rm gateway || true
 
             docker stop employee || true
             docker rm employee || true
 
-
-
-            # start new gateway
+            # Start Employee Service
             docker run -d \
-            --name gateway \
-            --restart always \
-            -p 80:8080 \
-            597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/gateway-service:latest
+              --name employee \
+              --network employee-network \
+              --restart always \
+              -p 8082:8082 \
+              597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/employee-service:latest
 
-
-
-            # start new employee
+            # Start Gateway Service
             docker run -d \
-            --name employee \
-            --restart always \
-            -p 8081:8080 \
-            597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/employee-service:latest
+              --name gateway \
+              --network employee-network \
+              --restart always \
+              -p 8084:8084 \
+              597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/gateway-service:latest
