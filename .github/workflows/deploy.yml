@@ -68,7 +68,6 @@ jobs:
           port: 22
 
           script: |
-
             aws ecr get-login-password --region ap-southeast-2 | \
             docker login --username AWS --password-stdin \
             597819998313.dkr.ecr.ap-southeast-2.amazonaws.com
@@ -89,7 +88,7 @@ jobs:
               --name employee \
               --network employee-network \
               --restart always \
-              -p 8082:8082 \
+              -p 8085:8085 \
               597819998313.dkr.ecr.ap-southeast-2.amazonaws.com/employee-service:latest
 
             # Start Gateway Service
