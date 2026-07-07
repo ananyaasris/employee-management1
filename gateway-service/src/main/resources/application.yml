@@ -11,7 +11,7 @@ spring:
     gateway:
       routes:
         - id: employee-service
-          uri: http://employee-service:8082
+          uri: http://employee:8085
           predicates:
             - Path=/employee/**
           filters:
