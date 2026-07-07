@@ -51,7 +51,7 @@ public class GatewayApplication {
 
         @GetMapping("/")
         public String home() {
-            return "<h1>🚀 gateway </h1>";
+            return "<h1>🚀 gateway < is a best on in my handson bro/h1>";
         }
     }
 }
