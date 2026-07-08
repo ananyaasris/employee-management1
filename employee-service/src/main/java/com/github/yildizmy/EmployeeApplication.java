@@ -34,6 +34,10 @@ public class EmployeeApplication {
     public String home() {
         return "<h1>👨‍💼 WELCOME TO EMPLOYEE SERVICE 🚀</h1>";
     }
+     @GetMapping("/hello")
+    public String home() {
+        return "<h1>👨‍💼 this is ananayaa🚀</h1>";
+    }
 
     private static void logApplicationStartup(Environment env) {
         String protocol = (env.getProperty("server.ssl.key-store") != null) ? "https" : "http";
