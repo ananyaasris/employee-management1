@@ -32,7 +32,7 @@ public class EmployeeApplication {
 
     @GetMapping("/")
     public String home() {
-        return "<h1>👨‍💼 better be good person goog=d things comes soonn 🚀</h1>";
+        return "<h1>👨‍💼 WELCOME TO EMPLOYEE SERVICE 🚀</h1>";
     }
 
     private static void logApplicationStartup(Environment env) {
