@@ -30,7 +30,7 @@ public class EmployeeApplication {
         logApplicationStartup(env);
     }
 
-    @GetMapping("/")
+    @GetMapping("/employee-service")
     public String home() {
         return "<h1>👨‍💼 WELCOME TO EMPLOYEE SERVICE 🚀</h1>";
     }
