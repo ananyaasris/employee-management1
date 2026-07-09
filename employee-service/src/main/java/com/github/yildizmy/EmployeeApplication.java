@@ -34,9 +34,10 @@ public class EmployeeApplication {
     public String home() {
         return "<h1>👨‍💼 WELCOME TO EMPLOYEE SERVICE 🚀</h1>";
     }
-     @GetMapping("/hello")
-    public String home() {
-        return "<h1>👨‍💼 this is ananayaa🚀</h1>";
+
+    @GetMapping("/hello")
+    public String hello() {   // ✅ Renamed from home() to hello()
+        return "<h1>👨‍💼 This is Ananyaa 🚀</h1>";
     }
 
     private static void logApplicationStartup(Environment env) {
@@ -52,10 +53,14 @@ public class EmployeeApplication {
         }
 
         log.info("\n-------------------------------------------------------\n" +
-                "Application '" + env.getProperty("spring.application.name") + "' is running!\n" +
-                "Local:      " + protocol + "://localhost:" + serverPort + contextPath + "\n" +
-                "External:   " + protocol + "://" + hostAddress + ":" + serverPort + contextPath + "\n" +
-                "Profile(s): " + String.join(",", env.getActiveProfiles()) + "\n" +
-                "-------------------------------------------------------");
+                "Application '{}' is running!\n" +
+                "Local:      {}://localhost:{}{}\n" +
+                "External:   {}://{}:{}{}\n" +
+                "Profile(s): {}\n" +
+                "-------------------------------------------------------",
+                env.getProperty("spring.application.name"),
+                protocol, serverPort, contextPath,
+                protocol, hostAddress, serverPort, contextPath,
+                String.join(",", env.getActiveProfiles()));
     }
 }
