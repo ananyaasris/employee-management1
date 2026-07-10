@@ -55,13 +55,13 @@ public class GatewayApplication {
         }
          @GetMapping("/employee")
          public String home() {
-        return "<h1>👨‍💼 WELCOME TO EMPLOYEE SERVICE 🚀</h1>";
-    }
+             return "<h1>👨‍💼 WELCOME TO EMPLOYEE SERVICE 🚀</h1>";
+        }
 
-    @GetMapping("/hello")
-    public String hello() {   // ✅ Renamed from home() to hello()
-        return "<h1>👨‍💼 This is Ananyaa 🚀</h1>";
-    }
+         @GetMapping("/hello")
+         public String hello() {    // ✅ Renamed from home() to hello()
+             return "<h1>👨‍💼 This is Ananyaa 🚀</h1>";
+        }
     }
    
 }
