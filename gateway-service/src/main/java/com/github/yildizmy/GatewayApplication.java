@@ -60,7 +60,7 @@ public class GatewayApplication {
 
         @GetMapping("/")
         public String home() {
-            return "<h1>🚀 WELCOME TO GATEWAY SERVICE <h1>";
+            return "<h1>🚀 today <h1>";
         }
          
     }
