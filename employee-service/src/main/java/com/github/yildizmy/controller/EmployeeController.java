@@ -22,4 +22,13 @@ public class EmployeeController {
         employee.setId(3L);
         return employee;
     }
+    @GetMapping("/emp")
+    public String home() {
+        return "<h1>👨‍💼 WELCOME TO EMPLOYEE SERVICE 🚀</h1>";
+    }
+
+    @GetMapping("/welcome")
+    public String hello() {   // ✅ Renamed from home() to hello()
+        return "<h1>👨‍💼 This is Ananyaa 🚀</h1>";
+    }
 }
