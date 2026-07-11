@@ -14,6 +14,7 @@ import java.net.UnknownHostException;
 @Slf4j
 @SpringBootApplication
 @EnableDiscoveryClient
+@RestController
 public class GatewayApplication {
 
     public static void main(String[] args) {
@@ -21,15 +22,21 @@ public class GatewayApplication {
         Environment env = app.run(args).getEnvironment();
         logApplicationStartup(env);
     }
-    @GetMapping("/employee")
-         public String home() {
-             return "<h1>👨‍💼 WELCOME TO EMPLOYEE SERVICE 🚀</h1>";
-        }
 
-         @GetMapping("/hello")
-         public String hello() {    // ✅ Renamed from home() to hello()
-             return "<h1>👨‍💼 This is Ananyaa 🚀</h1>";
-        }
+    @GetMapping("/")
+    public String home() {
+        return "<h1>🚀 Gateway Service is Running</h1>";
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "<h1>👨‍💼 This is Ananyaa 🚀</h1>";
+    }
+
+    @GetMapping("/employee")
+    public String employee() {
+        return "<h1>👨‍💼 WELCOME TO EMPLOYEE SERVICE 🚀</h1>";
+    }
 
     private static void logApplicationStartup(Environment env) {
         String protocol = env.getProperty("server.ssl.key-store") != null ? "https" : "http";
@@ -54,15 +61,4 @@ public class GatewayApplication {
                 protocol, hostAddress, serverPort, contextPath
         );
     }
-
-    @RestController
-    class HomeController {
-
-        @GetMapping("/")
-        public String home() {
-            return "<h1>🚀 today <h1>";
-        }
-         
-    }
-   
 }
