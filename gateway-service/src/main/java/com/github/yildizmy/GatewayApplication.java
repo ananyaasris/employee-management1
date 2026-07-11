@@ -23,7 +23,7 @@ public class GatewayApplication {
         logApplicationStartup(env);
     }
 
-    @GetMapping("/")
+    @GetMapping("/bro")
     public String home() {
         return "<h1>🚀 Welcome to My Gateway Service</h1>";
     }
