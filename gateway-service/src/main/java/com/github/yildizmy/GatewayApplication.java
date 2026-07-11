@@ -25,17 +25,12 @@ public class GatewayApplication {
 
     @GetMapping("/")
     public String home() {
-        return "<h1>🚀 Gateway Service is Running</h1>";
+        return "<h1>🚀 Welcome to My Gateway Service</h1>";
     }
 
     @GetMapping("/hello")
     public String hello() {
-        return "<h1>👨‍💼 This is Ananyaa 🚀</h1>";
-    }
-
-    @GetMapping("/employee")
-    public String employee() {
-        return "<h1>👨‍💼 WELCOME TO EMPLOYEE SERVICE 🚀</h1>";
+        return "<h1>👋 Hello, Ananyaa! Gateway is Running Successfully.</h1>";
     }
 
     private static void logApplicationStartup(Environment env) {
