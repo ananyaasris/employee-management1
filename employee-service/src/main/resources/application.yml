@@ -3,10 +3,12 @@ server:
   servlet:
     context-path: /employee-service
 
+spring:
+  cloud:
+    config:
+      enabled: false   # <--- ADD THIS
+
 management:
-  tracing:
-    sampling:
-      probability: 0.0   
   endpoints:
     web:
       exposure:
