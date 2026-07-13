@@ -6,12 +6,21 @@ server:
 spring:
   application:
     name: employee-service
-
   cloud:
     config:
       enabled: false
       import-check:
         enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: mappings,health
+      base-path: /
+  endpoint:
+    health:
+      show-details: always
 
 eureka:
   client:
