@@ -2,9 +2,6 @@ server:
   port: 8084
 
 spring:
-  application:
-    name: gateway-service
-
   cloud:
     config:
       enabled: false
@@ -22,9 +19,3 @@ spring:
 
   main:
     web-application-type: reactive
-
-eureka:
-  client:
-    enabled: false
-    register-with-eureka: false
-    fetch-registry: false
