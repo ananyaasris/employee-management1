@@ -30,8 +30,8 @@ public class EmployeeApplication {
         logApplicationStartup(env);
     }
 
-    @GetMapping("/hello")
-    public String hello() {
+    @GetMapping("/employee-service")
+    public String employeeService() {
         return "<h1>👨‍💼 Welcome Ananyaa! Employee Service is Running 🚀</h1>";
     }
 
