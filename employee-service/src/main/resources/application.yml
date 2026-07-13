@@ -1,6 +1,9 @@
+server:
+  port: 8084
+
 spring:
   application:
-    name: employee-service
+    name: gateway-service
 
   cloud:
     config:
@@ -8,8 +11,17 @@ spring:
       import-check:
         enabled: false
 
-server:
-  port: 8085
+    gateway:
+      routes:
+        - id: employee-service
+          uri: http://employee:8085
+          predicates:
+            - Path=/employee-service/**
+          filters:
+            - StripPrefix=1
+
+  main:
+    web-application-type: reactive
 
 eureka:
   client:
