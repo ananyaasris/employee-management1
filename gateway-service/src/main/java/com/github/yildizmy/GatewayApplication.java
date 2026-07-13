@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
@@ -16,7 +15,6 @@ import java.net.UnknownHostException;
 @SpringBootApplication
 @EnableDiscoveryClient
 @RestController
-@RequestMapping("/bro")
 public class GatewayApplication {
 
     public static void main(String[] args) {
@@ -25,14 +23,9 @@ public class GatewayApplication {
         logApplicationStartup(env);
     }
 
-    @GetMapping
-    public String home() {
-        return "<h1>🚀 Welcome to My Gateway Service</h1>";
-    }
-
-    @GetMapping("/hello")
-    public String hello() {
-        return "<h1>👋 Hello, Ananyaa! Gateway is Running Successfully.</h1>";
+    @GetMapping("/hi")
+    public String hi() {
+        return "<h1>👋 Hi! Gateway Service is Running Successfully.</h1>";
     }
 
     private static void logApplicationStartup(Environment env) {
@@ -48,8 +41,14 @@ public class GatewayApplication {
         }
 
         log.info(
-                "Application '{}' is running!",
-                env.getProperty("spring.application.name")
+                "\n-------------------------------------------------------\n" +
+                "Application '{}' is running!\n" +
+                "Local:      {}://localhost:{}{}\n" +
+                "External:   {}://{}:{}{}\n" +
+                "-------------------------------------------------------",
+                env.getProperty("spring.application.name"),
+                protocol, serverPort, contextPath,
+                protocol, hostAddress, serverPort, contextPath
         );
     }
 }
