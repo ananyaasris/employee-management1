@@ -3,19 +3,17 @@ server:
 
 spring:
   cloud:
-    config:
-      enabled: false
-      import-check:
-        enabled: false
-
     gateway:
       routes:
         - id: employee-service
-          uri: http://employee:8085
+          uri: http://localhost:8085
           predicates:
             - Path=/employee-service/**
           filters:
             - StripPrefix=1
 
-  main:
-    web-application-type: reactive
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway,health
