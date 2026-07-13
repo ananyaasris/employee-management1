@@ -11,6 +11,15 @@ spring:
       import-check:
         enabled: false
 
+    gateway:
+      routes:
+        - id: employee-service
+          uri: http://employee:8085
+          predicates:
+            - Path=/employee-service/**
+          filters:
+            - StripPrefix=1
+
   main:
     web-application-type: reactive
 
