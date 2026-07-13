@@ -24,11 +24,11 @@ public class EmployeeController {
     }
     @GetMapping("/emp")
     public String home() {
-        return "<h1>👨‍💼 WELCOME TO EMPLOYEE SERVICE 🚀</h1>";
+        return "<h1>👨‍💼 WELCOME TO EMPLOYEE SERVICE ha ha ha ha  🚀</h1>";
     }
 
     @GetMapping("/welcome")
     public String hello() {   // ✅ Renamed from home() to hello()
-        return "<h1>👨‍💼 This is Ananyaa 🚀</h1>";
+        return "<h1>👨‍💼 This is Ananyaa  eeeeeeeeee🚀</h1>";
     }
 }
