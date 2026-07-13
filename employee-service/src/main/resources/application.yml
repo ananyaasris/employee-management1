@@ -4,6 +4,9 @@ server:
     context-path: /employee-service
 
 management:
+  tracing:
+    sampling:
+      probability: 0.0   
   endpoints:
     web:
       exposure:
