@@ -28,7 +28,7 @@ public class GatewayApplication {
         return "<h1>👋 Hi! Gateway Service is Running Successfully.</h1>";
     }
 
-    @GetMapping("/welcome")
+    @GetMapping("/stopped")
     public String welcome() {
         return "<h1>🚀 Welcome to My Gateway Service!</h1>";
     }
