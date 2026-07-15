@@ -7,6 +7,17 @@ spring:
   cloud:
     config:
       enabled: false
+      import-check:
+        enabled: false
+
+    gateway:
+      routes:
+        - id: employee-service
+          uri: http://employee:8085
+          predicates:
+            - Path=/employee-service/**
+          filters:
+            - StripPrefix=1
 
 management:
   endpoints:
@@ -16,3 +27,9 @@ management:
   endpoint:
     health:
       show-details: always
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
