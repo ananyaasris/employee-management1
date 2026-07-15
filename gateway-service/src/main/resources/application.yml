@@ -1,16 +1,12 @@
 server:
   port: 8084
+  servlet:
+    context-path: /gatewayservice
 
 spring:
   cloud:
     config:
-      enabled: false   # <--- ADD THIS
-    gateway:
-      routes:
-      - id: employee-service
-        uri: http://localhost:8085
-        predicates:
-        - Path=/employee-service/**
+      enabled: false
 
 management:
   endpoints:
