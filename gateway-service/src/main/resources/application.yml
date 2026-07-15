@@ -1,9 +1,10 @@
 server:
   port: 8084
-  servlet:
-    context-path: /gatewayservice
 
 spring:
+  webflux:
+    base-path: /gatewayservice
+
   cloud:
     config:
       enabled: false
